@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>controle oop</title>
+</head>
+<body>
+    <script>
+        class Produit {
+            constructor(id, nom, prix) {
+                this.id = id;
+                this.nom = nom;
+                this.prix = prix;
+            }
+        }
+
+        // Création de la classe élément du panier
+        class ElementPanier {
+            constructor(produit, quantite) {
+                this.produit = produit;
+                this.quantite = quantite;
+            }
+
+            // Ajout de la méthode de calcul du total
+            calculerPrixTotal() {
+                return this.produit.prix * this.quantite;
+            }
+        }
+
+        class Panier {
+            constructor() {
+                this.elements = [];
+            }
+
+            getTotalArticles() {
+                let total = 0;
+                for (const element of this.elements) {
+                    total += element.quantite;
+                }
+                return total;
+            }
+
+            ajouterArticle(element) {
+                this.elements.push(element);
+            }
+
+            supprimerArticle(idProduit) {
+                this.elements = this.elements.filter(element => element.produit.id !== idProduit);
+            }
+
+            afficherPanier() {
+                console.log("Contenu du panier:");
+                for (const element of this.elements) {
+                    console.log(`- ${element.produit.nom} x ${element.quantite} (prix total: ${element.calculerPrixTotal().toFixed(2)})`);
+                }
+            }
+        }
+
+        ///////////////////////// PARTIE DEUX PRATIQUE 
+
+        // Créer des produits
+        const produit1 = new Produit(1, "T-shirt", 19.99);
+        const produit2 = new Produit(2, "Jean", 49.99);
+        const produit3 = new Produit(3, "Chaussures", 39.99);
+
+        // Ajouter les éléments au panier
+        const panier = new Panier();
+        panier.ajouterArticle(new ElementPanier(produit1, 1));
+        panier.ajouterArticle(new ElementPanier(produit2, 2));
+        panier.ajouterArticle(new ElementPanier(produit3, 3));
+
+        // Afficher le panier
+        panier.afficherPanier();
+
+        // Supprimer un article du panier
+        panier.supprimerArticle(2);
+
+        // Afficher le panier après suppression
+        panier.afficherPanier();
+    </script>
+</body>
+</html>
